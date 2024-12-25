@@ -1,7 +1,5 @@
-import { z } from "zod";
 import React from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+
 
 import {
   Form,
@@ -12,27 +10,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import AuthHeaer from "../header";
+import AuthFooter from "../footer";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { authSignUpSchema } from "@/validations/auth";
-import AuthFooter from "../footer";
+import useAuthSignUpFeatures from "./features";
+import LoadingSpinner from "@/tools/spinner";
 
 const SignUpPageComponent: React.FC = () => {
-  const form = useForm<z.infer<typeof authSignUpSchema>>({
-    resolver: zodResolver(authSignUpSchema),
-    defaultValues: {
-      name: "",
-      surname: "",
-      email: "",
-      password: "",
-    },
-  });
-
-  function onFormSubmit(values: z.infer<typeof authSignUpSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-  }
+  const { loading, error, form, onFormSubmit } = useAuthSignUpFeatures();
 
   return (
     <div className='grid place-content-center h-screen'>
@@ -80,7 +65,7 @@ const SignUpPageComponent: React.FC = () => {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input placeholder='Enter your email' {...field} />
+                  <Input type='email' placeholder='Enter your email' {...field} />
                 </FormControl>
 
                 <FormMessage />
@@ -95,7 +80,7 @@ const SignUpPageComponent: React.FC = () => {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input placeholder='Enter your password' {...field} />
+                  <Input type='password' placeholder='Enter your password' {...field} />
                 </FormControl>
 
                 <FormMessage />
@@ -103,11 +88,16 @@ const SignUpPageComponent: React.FC = () => {
             )}
           />
 
+          {error && error}
+
           <Button
             type='submit'
-            className='w-full bg-[#168156] hover:bg-[#168156]'
+            className='w-full bg-[#168156] hover:bg-[#168156] dark:bg-white'
+            disabled={form.formState.isSubmitting}
           >
-            Sign Up
+            {
+              loading? <LoadingSpinner /> : "Sign Up"
+            }
           </Button>
         </form>
       </Form>

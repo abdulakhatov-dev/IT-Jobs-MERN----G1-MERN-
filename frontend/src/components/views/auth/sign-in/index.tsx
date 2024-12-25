@@ -1,7 +1,4 @@
-import { z } from "zod";
 import React from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 
 import {
   Form,
@@ -12,25 +9,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import AuthHeaer from "../header";
+import AuthFooter from "../footer";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { authSignInSchema } from "@/validations/auth";
-import AuthFooter from "../footer";
+import useAuthSignInFeatures from "./features";
+import LoadingSpinner from "@/tools/spinner";
 
 const SignInPageComponent: React.FC = () => {
-  const form = useForm<z.infer<typeof authSignInSchema>>({
-    resolver: zodResolver(authSignInSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-  });
-
-  function onFormSubmit(values: z.infer<typeof authSignInSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-  }
+  const { loading, error, form, onFormSubmit } = useAuthSignInFeatures();
 
   return (
     <div className='grid place-content-center h-screen relative'>
@@ -71,11 +57,14 @@ const SignInPageComponent: React.FC = () => {
             )}
           />
 
+          {error && error}
+
           <Button
             type='submit'
             className='w-full bg-[#168156] hover:bg-[#168156] dark:bg-white'
+            disabled={loading}
           >
-            Sign Up
+            {loading ? <LoadingSpinner /> : "Sign In"}
           </Button>
         </form>
       </Form>
