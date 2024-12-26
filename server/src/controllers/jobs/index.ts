@@ -9,14 +9,14 @@ export const getAllJobs = async (
   next: NextFunction
 ) => {
   try {
-    const page = parseInt(req.query.page as string) || 1;
-    const limit = parseInt(req.query.limit as string) || 10;
-    const search = req.query.search;
-    const category = req.query.category;
+    const page = parseInt(req.query?.page as string) || 1;
+    const limit = parseInt(req.query?.limit as string) || 10;
+    const search = String(req.query?.search || "") as string;
+    // const category = String(req.query?.category || '') as string;
 
     const query = {
       title: { $regex: search, $options: "i" },
-      category: category ? { $eq: category } : {},
+      // category: { $eq: category },
     };
 
     const skip = (page - 1) * limit;

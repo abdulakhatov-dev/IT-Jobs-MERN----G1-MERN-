@@ -1,15 +1,10 @@
 import React from "react";
-import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
-import { IUser } from "@/interface/user";
+import { BrowseJobs } from "./customs";
 
-const HomePageComponent:React.FC = () => {
-    const user = useAuthUser() as IUser
-
-  return <div>
-    {user?.name}
-    {user?.surname}
-<img src={user?.profilePhoto} alt="" />
-  </div>;
+const HomePageComponent: React.FC = () => {
+  return <>
+    <BrowseJobs />
+  </>;
 };
 
 export default HomePageComponent;
