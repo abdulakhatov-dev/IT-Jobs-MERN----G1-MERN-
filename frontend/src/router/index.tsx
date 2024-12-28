@@ -8,6 +8,7 @@ import SuspenseWrapper from "@/tools/suspense";
 import MainLayout from "@/components/layout";
 
 const HomePage = lazy(() => import("@/pages/home"));
+const AddJobPage = lazy(() => import("@/pages/add-job"));
 
 const AppRouter: React.FC = () => {
   const router = createBrowserRouter([
@@ -39,7 +40,7 @@ const AppRouter: React.FC = () => {
         <RequireAuth fallbackPath={"/auth/sign-in"}>
           <SuspenseWrapper>
             <MainLayout>
-              <h1>Add Job</h1>
+              <AddJobPage />
             </MainLayout>
           </SuspenseWrapper>
         </RequireAuth>

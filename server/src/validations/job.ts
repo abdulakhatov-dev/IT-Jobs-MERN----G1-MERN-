@@ -3,7 +3,7 @@ import { z } from "zod";
 export const validateJob = (data: any) => {
   const schema = z.object({
     title: z.string({ required_error: "Title is required!" }),
-    type: z.string({ required_error: "Type is required!" }),
+    category: z.string({ required_error: "Category is required!" }),
     location: z.string({ required_error: "Location is required!" }),
     description: z.string({ required_error: "Description is required!" }),
     salary: z.string({ required_error: "Salary is required!" }),

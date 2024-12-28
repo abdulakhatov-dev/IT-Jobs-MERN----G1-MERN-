@@ -1,8 +1,12 @@
 import React from "react";
 import { IJob } from "@/interface/job";
 import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { useJobsService } from "@/services/jobs";
 
 const Card: React.FC<{job: IJob}> = ({ job }) => {
+    const {deleteJob } = useJobsService();
+
   return <div className="bg-white rounded-xl shadow-md relative">
   <div className="p-4">
       <div className="mb-6">
@@ -30,6 +34,7 @@ const Card: React.FC<{job: IJob}> = ({ job }) => {
               Read More
           </Link>
       </div>
+      <Button onClick={() => deleteJob.mutate(job?._id)}>Delete</Button>
   </div>
 </div>
 };
